@@ -4,6 +4,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 
 /**
  * Selenium web driver overview class
@@ -43,9 +45,15 @@ public class GeneralUtils {
      */
     public void input(By locator, String inputText) {
         wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-        driver.findElement(locator).clear();
-        driver.findElement(locator).sendKeys(inputText);
+        waitforloadElement(locator);
         waitForSeconds();
+        driver.findElement(locator).clear();
+
+        WebElement toClear = driver.findElement(locator);
+        toClear.sendKeys(Keys.CONTROL + "a");
+        toClear.sendKeys(Keys.DELETE);
+
+        driver.findElement(locator).sendKeys(inputText);
     }
 
 
@@ -136,6 +144,34 @@ public class GeneralUtils {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
         wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+
+    /**
+     * Click on number of elements
+     * @param item
+     */
+    public void clickOnNumberElement(By locator, int item){
+        List<WebElement> elements = findElements(locator);
+        int n = 1;
+        for (WebElement e : elements)
+        {
+            if(n == item){
+                e.click();
+                break;
+            }
+            n = n + 1;
+        }
+    }
+
+
+    /**
+     * Return list of elements
+     * @param locator
+     * @return
+     */
+    public List<WebElement> findElements(By locator) {
+        return this.driver.findElements(locator);
     }
 
 }

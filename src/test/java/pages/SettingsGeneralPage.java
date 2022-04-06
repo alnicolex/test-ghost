@@ -3,6 +3,7 @@ package pages;
 
 import dto.FormDto;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import utils.GeneralUtils;
 
@@ -11,20 +12,23 @@ import utils.GeneralUtils;
  */
 public class SettingsGeneralPage {
 
-    public By btnSave =  By.id("ember330");
+
+    public By btnSave =  By.id("//span[contains(text(), 'Save')]");
+
+    // Buttons
+    public By btnGeneral = By.xpath("//a[@href=\"#/settings/general/\"]");
+    public By btnNavigation = By.xpath("//a[@href=\"#/settings/navigation/\"]");
 
     //Title & description
-    public By btnTitle =  By.xpath("//button[contains(@data-ember-action-334,'334')]");
-    public By inTitle = By.id("ember431");
-    public By inDescription = By.id("ember433");
+    public By btnExpand =  By.xpath("//button[@class=\"gh-btn\"]");
+    public By inTitle = By.xpath("//p[contains(text(), 'The name of your site')]//preceding::input[1]");
+    public By inDescription = By.xpath("//p[contains(text(), 'Used in your theme, meta data and search results')]//preceding::input[1]");
 
     //Site timezone
-    public By btnTime =  By.xpath("//button[contains(@data-ember-action-334,'334')]");
     public By inTimezone = By.id("timezone");
 
     //Social accounts
-    public By btnSocialAccount =  By.xpath("//button[contains(@data-ember-action-349,'349')]");
-    public By inTwitterProfile = By.id("ember461");
+    public By inTwitterProfile = By.xpath("//p[contains(text(), 'Twitter profile')]//preceding::input[1]");
 
 
     private WebDriver driver;
@@ -45,7 +49,7 @@ public class SettingsGeneralPage {
      * @return check
      */
     public Boolean loadPage(){
-        return utils.isDisplayed(btnSave);
+        return utils.isDisplayed(btnGeneral);
     }
 
 
@@ -53,18 +57,38 @@ public class SettingsGeneralPage {
      * Enter Data
      * @param dto
      */
-    public void register (FormDto dto) {
-        utils.click(btnTitle);
+    public void changeGeneral(FormDto dto) {
+        utils.click(btnGeneral);
+
+        // change Title and Description
+        utils.clickOnNumberElement(btnExpand, 1);
         utils.input(inTitle, dto.getTitlePage());
         utils.input(inDescription, dto.getDescriptionPage());
 
-        utils.click(btnTime);
+        // change TimeZone
+        utils.clickOnNumberElement(btnExpand, 2);
         utils.selectOption(inTimezone, dto.getTimeZone());
 
-        utils.click(btnSocialAccount);
-        utils.input(inTwitterProfile, dto.getTitlePage());
+        // change Social MEdia
+        utils.clickOnNumberElement(btnExpand, 7);
+        utils.input(inTwitterProfile, dto.getTwitter());
 
     }
+
+
+    /**
+     * Save
+     */
+    public Boolean saveConfiguration(){
+        try {
+            utils.click(btnSave);
+            return true;
+        } catch (TimeoutException var) {
+            System.out.println(var);
+            return false;
+        }
+    }
+
 
 
 }

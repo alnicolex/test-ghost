@@ -2,14 +2,13 @@ package pages;
 
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import utils.GeneralUtils;
 
 /**
  * Class with the elements and functionalities of the login
  */
-public class SigninPage {
+public class SignInPage {
 
     public By inEmail = By.id("ember7");
     public By inPassword = By.id("ember9");
@@ -22,7 +21,7 @@ public class SigninPage {
      * Class constructor
      * @param driver
      */
-    public SigninPage(WebDriver driver) {
+    public SignInPage(WebDriver driver) {
         this.driver = driver;
         utils = new GeneralUtils(this.driver);
         utils.maximize();
@@ -43,7 +42,7 @@ public class SigninPage {
      * @param email
      * @param pws
      */
-    public void signinAdministrator (String email, String pws) {
+    public void enterCredentials(String email, String pws) {
         utils.input(inEmail, email);
         utils.input(inPassword, pws);
     }
@@ -51,14 +50,9 @@ public class SigninPage {
     /**
      * Bottun login
      */
-    public Boolean login ()  {
-        try {
-            utils.click(btnSignin);
-            return true;
-        } catch (TimeoutException var) {
-            System.out.println(var);
-            return false;
-        }
+    public SettingPage login ()  {
+        utils.click(btnSignin);
+        return new SettingPage(driver);
     }
 
 

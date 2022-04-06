@@ -5,10 +5,46 @@ package dto;
  */
 public class FormDto {
 
+    private String siteTitle;
+    private String fullName;
+    private String email;
+    private String pws;
     private String titlePage;
     private String descriptionPage;
     private String timeZone;
     private String twitter;
+
+    public String getSiteTitle() {
+        return siteTitle;
+    }
+
+    public void setSiteTitle(String siteTitle) {
+        this.siteTitle = siteTitle;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPws() {
+        return pws;
+    }
+
+    public void setPws(String pws) {
+        this.pws = pws;
+    }
 
     public String getTitlePage() {
         return titlePage;
