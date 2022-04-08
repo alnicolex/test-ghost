@@ -91,12 +91,8 @@ public class ManagementAppTest {
             Assert.assertTrue(pageAdministrator.loadPage(), "Error home page not available");
         } catch (AssertionError e)
         {
-            pageSignIn = new SignInPage(driver);
-            administratorPageAvailable();
             System.out.println("registered user ");
-            endTest();
         }
-
     }
 
 

@@ -85,6 +85,7 @@ public class GeneralUtils {
      * @return
      */
     public String getTittle() {
+        waitForSeconds();
         return this.driver.getTitle();
     }
 

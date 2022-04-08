@@ -2,6 +2,7 @@ package pages;
 
 import dto.FormDto;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import utils.GeneralUtils;
 
@@ -34,12 +35,10 @@ public class CreateAccountPage {
      * @return check
      */
     public Boolean loadPage(){
-        try {
-            utils.isDisplayed(inSite);
-            return true;
-        } catch (NoClassDefFoundError e) {
-            return false;
-        }
+
+        String txtTitle = utils.getTittle();
+        if (!txtTitle.equals("Setup - Ghost")) { return false; }
+        return true;
     }
 
 
