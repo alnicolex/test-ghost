@@ -11,10 +11,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import pages.CreateAccountPage;
-import pages.SettingPage;
-import pages.SettingsGeneralPage;
-import pages.SignInPage;
+import pages.*;
 import utils.VideoRecorderUtilitis;
 
 import java.util.List;
@@ -30,6 +27,7 @@ public class ManagementAppTest {
     private SignInPage pageSignIn;
     private SettingPage pageSetting;
     private SettingsGeneralPage pageSettingGeneral;
+    private HomePage homePage;
     private FormDto formDto;
 
 
@@ -80,16 +78,25 @@ public class ManagementAppTest {
     }
 
 
-    @Given("User accesses the portal")
-    public void theUserIsInHomePage() throws Exception {
-//        VideoRecorderUtilitis.startRecord("CreateAdministratorUser");
-        driver.get("http://localhost:2369/ghost/#/setup");
+    @Given("User administrator accesses the portal")
+    public void administratorIsInHomePage() throws Exception {
+        VideoRecorderUtilitis.startRecord("Esc1-CreateAdministratorUser");
+        driver.get("http://localhost:2370/ghost/#/setup");
     }
 
 
     @When("Registration page is displayed")
-    public void registerPageAvailable(){
-        Assert.assertTrue(pageAdministrator.loadPage(), "Error home page not available");
+    public void registerPageAvailable() throws Exception {
+        try{
+            Assert.assertTrue(pageAdministrator.loadPage(), "Error home page not available");
+        } catch (AssertionError e)
+        {
+            pageSignIn = new SignInPage(driver);
+            administratorPageAvailable();
+            System.out.println("registered user ");
+            endTest();
+        }
+
     }
 
 
@@ -121,8 +128,8 @@ public class ManagementAppTest {
 
     @Given("Administrator user accesses the portal")
     public void administratorPageSingIn() throws Exception {
-//        VideoRecorderUtilitis.startRecord("ConfigureWebPlatform");
-        driver.get("http://localhost:2369/ghost/#/signin");
+        VideoRecorderUtilitis.startRecord("Esc2-ConfigureWebPlatform");
+        driver.get("http://localhost:2370/ghost/#/signin");
         pageSignIn = new SignInPage(driver);
     }
 
@@ -175,17 +182,29 @@ public class ManagementAppTest {
     }
 
 
-    @When("User selects the configuration of pages")
-    public void selectConfigurationPages() {
+    @Given("User accesses the portal")
+    public void userIsInHomePage() throws Exception {
+        VideoRecorderUtilitis.startRecord("Esc3-UserValidateData");
+        driver.get("http://localhost:2370/");
+        homePage = new HomePage(driver);
+    }
 
-        pageSettingGeneral = pageSetting.configurationOption();
-        Assert.assertTrue(pageSettingGeneral.loadPage(), "Error Setting General page not available");
+
+    @Then("The user validates the following information")
+    public void userCheckData(DataTable dataTable) {
+        List<Map<String, String>> form = dataTable.asMaps(String.class, String.class);
+        formDto = homePage.returnData();
+
+        System.out.println(homePage.getTittlePage());
+        Assert.assertEquals(formDto.getTitlePage(), form.get(0).get("title"), "Error title");
+        Assert.assertEquals(formDto.getDescriptionPage(), form.get(0).get("description"), "Error paragraph");
+        Assert.assertEquals(formDto.getTwitter(), form.get(0).get("twitterProfile"), "Error twitter");
     }
 
 
     @After
     public void endTest() throws Exception {
-//        VideoRecorderUtilitis.stopRecord();//End point of video recording
+        VideoRecorderUtilitis.stopRecord();
         driver.close();
     }
 

@@ -63,23 +63,40 @@ public class VideoRecorderUtilitis extends ScreenRecorder {
      * @throws Exception
      */
     public static void startRecord(String methodName) throws Exception {
-        File file = new File("./recordings/"); //Path where video recording would be stored inside project
+
+        File file = new File("./videos/");
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = screenSize.width;
         int height = screenSize.height;
 
         Rectangle captureSize = new Rectangle(0, 0, width, height);
 
-        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().
-                getDefaultScreenDevice()
+        GraphicsConfiguration gc = GraphicsEnvironment
+                .getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice()
                 .getDefaultConfiguration();
+
+//        screenRecorder = new VideoRecorderUtilitis(gc, captureSize,
+//                new Format(MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),
+//                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
+//                        CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 24, FrameRateKey,
+//                        Rational.valueOf(15), QualityKey, 1.0f, KeyFrameIntervalKey, 15 * 60),
+//                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey, Rational.valueOf(30)),
+//                null, file, methodName);
+
         screenRecorder = new VideoRecorderUtilitis(gc, captureSize,
                 new Format(MediaTypeKey, MediaType.FILE, MimeTypeKey, MIME_AVI),
-                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
-                        CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 24, FrameRateKey,
-                        Rational.valueOf(15), QualityKey, 1.0f, KeyFrameIntervalKey, 15 * 60),
-                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey, Rational.valueOf(30)),
+                new Format(MediaTypeKey, MediaType.VIDEO,
+                        EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
+                        CompressorNameKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE,
+                        DepthKey, 24, FrameRateKey, Rational.valueOf(15),
+                        QualityKey, 1.0f,
+                        KeyFrameIntervalKey, 15 * 60),
+                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black",
+                        FrameRateKey, Rational.valueOf(30)),
                 null, file, methodName);
+
         screenRecorder.start();
     }
 

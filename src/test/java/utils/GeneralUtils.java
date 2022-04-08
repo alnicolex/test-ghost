@@ -64,9 +64,29 @@ public class GeneralUtils {
      */
     public String getText(By locator) {
         waitforloadElement(locator);
+        waitForSeconds();
         return this.driver.findElement(locator).getText();
     }
 
+
+    /**
+     * get text attribute
+     * @param locator
+     * @param tag
+     * @return
+     */
+    public String getTextAttribute(By locator, String tag) {
+        waitforloadElement(locator);
+        return this.driver.findElement(locator).getAttribute(tag);
+    }
+
+    /**
+     * get tittle
+     * @return
+     */
+    public String getTittle() {
+        return this.driver.getTitle();
+    }
 
     /**
      * Click elemento web

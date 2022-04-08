@@ -1,13 +1,13 @@
 Feature: ManagementApp
 
-#  Scenario: Create Administrator user
-#    Given User accesses the portal
-#    When Registration page is displayed
-#    And User enters the following information the register
-#      | siteTitle   | fullName | email            | password            |
-#      | web-app     | web-app  | web-app@mail.com | Qwertyuiopasdfghjkl |
-#    And User click the create account button
-#    Then Login to the administrator page and log out
+  Scenario: Create Administrator user
+    Given User administrator accesses the portal
+    When Registration page is displayed
+    And User enters the following information the register
+      | siteTitle   | fullName | email            | password            |
+      | web-app     | web-app  | web-app@mail.com | Qwertyuiopasdfghjkl |
+    And User click the create account button
+    Then Login to the administrator page and log out
 
   Scenario Outline: Configure a web platform
     Given Administrator user accesses the portal
@@ -24,6 +24,12 @@ Feature: ManagementApp
     Examples:
       | email             | password             |
       | web-app@mail.com  | Qwertyuiopasdfghjkl  |
+
+  Scenario: User validate Data
+    Given User accesses the portal
+    Then The user validates the following information
+      | title              | description          | twitterProfile                      |
+      | test page startupy | test page startupy   | https://twitter.com/startupyworld   |
 
 
 #  Scenario Outline: User create a new page

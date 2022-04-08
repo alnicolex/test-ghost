@@ -5,12 +5,16 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import utils.GeneralUtils;
 
+/**
+ * Class with the elements Setting Page
+ */
 public class SettingPage {
 
-    public By btnAdmin = By.id("ember63");
+    public By btnAdmin = By.xpath("//h6[contains(text(), 'Explore Ghost admin')]");
     public By btnConfiguration = By.xpath("//a[@href=\"#/settings/\"]");
     public By btnPages = By.xpath("//a[@href=\"#/pages/\"]");
-    public By btnSignOut = By.id("//a[@href=\"#/signout/\"]");
+    public By btnAvatar = By.xpath("//div[@class='pe-all']");
+    public By btnSignOut = By.xpath("//a[@href=\"#/signout/\"]");
 
     private WebDriver driver;
     private GeneralUtils utils;
@@ -64,6 +68,7 @@ public class SettingPage {
      */
     public Boolean signOut(){
         try {
+            utils.click(btnAvatar);
             utils.click(btnSignOut);
             return true;
         } catch (TimeoutException var) {

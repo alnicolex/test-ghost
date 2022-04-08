@@ -2,7 +2,6 @@ package pages;
 
 import dto.FormDto;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import utils.GeneralUtils;
 
@@ -15,7 +14,7 @@ public class CreateAccountPage {
     public By inName = By.xpath("//input[@id= 'name']");
     public By inEmail = By.xpath("//input[@id= 'email']");
     public By inPws=  By.xpath("//input[@id= 'password']");
-    public By btnSave = By.id("ember9");
+    public By btnCreate = By.id("ember9");
 
     private WebDriver driver;
     private GeneralUtils utils;
@@ -35,7 +34,12 @@ public class CreateAccountPage {
      * @return check
      */
     public Boolean loadPage(){
-        return utils.isDisplayed(btnSave);
+        try {
+            utils.isDisplayed(inSite);
+            return true;
+        } catch (NoClassDefFoundError e) {
+            return false;
+        }
     }
 
 
@@ -44,7 +48,6 @@ public class CreateAccountPage {
      * @param dto
      */
     public void registerData (FormDto dto) {
-
         utils.input(inSite, dto.getSiteTitle());
         utils.input(inName, dto.getFullName());
         utils.input(inEmail, dto.getEmail());
@@ -56,8 +59,7 @@ public class CreateAccountPage {
      * Submit register
      */
     public SettingPage saveRegister ()  {
-
-        utils.click(btnSave);
+        utils.click(btnCreate);
         return new SettingPage(driver);
 
     }

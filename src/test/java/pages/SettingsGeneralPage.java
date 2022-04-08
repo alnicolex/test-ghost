@@ -13,7 +13,7 @@ import utils.GeneralUtils;
 public class SettingsGeneralPage {
 
 
-    public By btnSave =  By.id("//span[contains(text(), 'Save')]");
+    public By btnSave =  By.xpath("//span[contains(text(), 'Save')]");
 
     // Buttons
     public By btnGeneral = By.xpath("//a[@href=\"#/settings/general/\"]");
@@ -82,6 +82,7 @@ public class SettingsGeneralPage {
     public Boolean saveConfiguration(){
         try {
             utils.click(btnSave);
+
             return true;
         } catch (TimeoutException var) {
             System.out.println(var);
